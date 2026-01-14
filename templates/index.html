@@ -1,0 +1,36 @@
+{% extends "common.html" %}
+    {% block title %} Ojaoba {% endblock title %}
+    {% block content %}
+    {% load static %}
+
+    <div class="container py-2">
+
+        <p class="fs-5 ">Welcome {% if name %} {{name}} {% else %} there! {% endif %}</p>
+
+        <div class="banner">
+            <p class="text-light fs-4 fw-medium">Ojaoba is a platform for buying and selling products.</p>
+        </div>
+
+
+        <h3 class="text-center my-4">Products</h3>
+
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3">
+                <div class="card">
+                    {% if product.image %}
+                        <img class="card-img-top" src="{{product.image}}" alt="{{product.name}}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <p class="card-text">{{product.description}}</p>
+                        <p>#{{product.price}}</p>
+                        <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock content %}

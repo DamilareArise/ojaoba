@@ -1,0 +1,20 @@
+
+.text-color{
+    color: tomato;
+    font-size: 1.2rem;
+}
+
+.banner{
+    background-image:linear-gradient(rgba(0, 0, 0, 0.685), rgba(133, 128, 128, 0.144)), url("../images/wall3.jpg");
+    background-size: cover;
+    height:40dvh;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-img-top{
+    height: 300px;
+    object-fit: cover;
+}
