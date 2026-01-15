@@ -3,6 +3,26 @@
     {% block content %}
     {% load static %}
     
-    
+    <div class="container my-4">
+        <div class="text-center py-2 h3">All Products</div>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3 my-2">
+                <div class="card">
+                    {% if product.image %}
+                        <img class="card-img-top" src="{{product.image}}" alt="{{product.name}}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <p class="card-text">{{product.description}}</p>
+                        <p>#{{product.price}}</p>
+                        <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
     
     {% endblock content %}

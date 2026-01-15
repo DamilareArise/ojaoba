@@ -21,8 +21,7 @@ from productApp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.getHome),
-    path("products/", views.getProducts)
-
+    path("", views.getHome, name="home"),
+    path("products/", views.getProducts, name="products")
 ]
 
