@@ -2,6 +2,7 @@
     {% block title %} Ojaoba {% endblock title %}
     {% block content %}
     {% load static %}
+    {% load humanize %}
 
     <div class="container py-2">
 
@@ -19,12 +20,13 @@
             <div class="col-md-3">
                 <div class="card">
                     {% if product.image %}
-                        <img class="card-img-top" src="{{product.image}}" alt="{{product.name}}">
+                 
+                        <img class="card-img-top" src="{{product.image.url}}" alt="{{product.title}}">
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{product.name}}</h5>
+                        <h5 class="card-title">{{product.title|upper}}</h5>
                         <p class="card-text">{{product.description}}</p>
-                        <p>#{{product.price}}</p>
+                        <p>#{{product.price|intword}}</p>
                         <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
                     </div>
                 </div>

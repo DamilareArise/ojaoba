@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "productApp",
+    "django.contrib.humanize"
 ]
 
 # client <= md => Server <= md => Database
