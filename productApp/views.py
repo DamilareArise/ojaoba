@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Product
 
 # Create your views here.
 
@@ -56,6 +57,17 @@ products = [
 def getHome(request):
     username = "Bolaji Ogunmola"
     
+    products = Product.objects.all()
+    # products = Product.objects.filter(id=1)
+    # products = Product.objects.filter(title='pRoDuct 2')
+    # products = Product.objects.filter(title__iexact='pRoDuct 2')
+    # products = Product.objects.filter(title__exact='pRoDuct 2')
+    # products = Product.objects.filter(title__icontains='pRo')
+    # products = Product.objects.filter(title__contains='pRo')
+    # products = Product.objects.filter(quantity__gte=10)
+    product = Product.objects.get(id=1)
+    print(product.description)
+    print(products)
     return render(
         request,
         template_name="index.html",
