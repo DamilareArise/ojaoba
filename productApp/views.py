@@ -1,63 +1,13 @@
-from django.shortcuts import render
-from .models import Product
+from django.shortcuts import render, get_object_or_404
+from .models import Product, ProductFeatures
 
 # Create your views here.
 
-products = [
-        {
-            "name": "Product 1",
-            "price": 100,
-            "description": "Product 1 description",
-            "image": "https://tse4.mm.bing.net/th/id/OIF.jMp6cNMJwCbKDHwMN3Uqmw?rs=1&pid=ImgDetMain&o=7&rm=3"
-        },
-        {
-            "name": "Product 2",
-            "price": 200,
-            "description": "Product 2 description",
-            "image": "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg"
-        },
-        {
-            "name": "Product 3",
-            "price": 300,
-            "description": "Product 3 description",
-            "image": "https://tse2.mm.bing.net/th/id/OIP.WWJfnkziSFoYhdJ-3wDV9QHaLH?rs=1&pid=ImgDetMain&o=7&rm=3"
-        },
-        {
-            "name": "Product 4",
-            "price": 400,
-            "description": "Product 4 description",
-            "image": "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
-        },
-        {
-            "name": "Product 1",
-            "price": 100,
-            "description": "Product 1 description",
-            "image": "https://tse4.mm.bing.net/th/id/OIF.jMp6cNMJwCbKDHwMN3Uqmw?rs=1&pid=ImgDetMain&o=7&rm=3"
-        },
-        {
-            "name": "Product 2",
-            "price": 200,
-            "description": "Product 2 description",
-            "image": "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg"
-        },
-        {
-            "name": "Product 3",
-            "price": 300,
-            "description": "Product 3 description",
-            "image": "https://tse2.mm.bing.net/th/id/OIP.WWJfnkziSFoYhdJ-3wDV9QHaLH?rs=1&pid=ImgDetMain&o=7&rm=3"
-        },
-        {
-            "name": "Product 4",
-            "price": 400,
-            "description": "Product 4 description",
-            "image": "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg"
-        }
-    ]
 
 def getHome(request):
     username = "Bolaji Ogunmola"
     
-    products = Product.objects.all()
+    products = Product.objects.all().order_by("-created_at")
     # products = Product.objects.filter(id=1)
     # products = Product.objects.filter(title='pRoDuct 2')
     # products = Product.objects.filter(title__iexact='pRoDuct 2')
@@ -65,9 +15,12 @@ def getHome(request):
     # products = Product.objects.filter(title__icontains='pRo')
     # products = Product.objects.filter(title__contains='pRo')
     # products = Product.objects.filter(quantity__gte=10)
-    product = Product.objects.get(id=1)
-    print(product.description)
-    print(products)
+    # product = Product.objects.get(id=1)
+    # print(product.description)
+    # print(products)
+    
+    # product.delete()
+    
     return render(
         request,
         template_name="index.html",
@@ -76,9 +29,19 @@ def getHome(request):
 
 
 def getProducts(request):
-    
+    products = Product.objects.all().order_by("-created_at")
+
     return render(
         request,
         template_name="products.html",
         context={"products": products}
+    )
+    
+def getProductbyId(request, product_id):
+    # product = Product.objects.get(id=product_id)
+    product = get_object_or_404(Product, id=product_id)
+    return render(
+        request=request,
+        template_name="single_product.html",
+        context={"product": product}
     )

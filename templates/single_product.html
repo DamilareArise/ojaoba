@@ -1,0 +1,23 @@
+{% extends "common.html" %}
+ {% block title %} {{product.title}} {% endblock title %}
+    {% block content %}
+    {% load static %}
+    {% load humanize %}
+
+    <div class="container col-md-6 my-2">
+        <div class="card border-0 ">
+            {% if product.image %}
+                <img class="card-img-top" src="{{product.image.url}}" alt="{{product.title}}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{product.title|title}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <p>#{{product.price|intcomma}}</p>
+                <p><i>Last updated: </i> {{product.updated_at|naturalday|title}}</p>
+                <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
+            </div>
+        </div>
+    </div>
+
+
+    {% endblock %}

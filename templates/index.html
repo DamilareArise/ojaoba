@@ -18,18 +18,21 @@
         <div class="row">
             {% for product in products %}
             <div class="col-md-3">
-                <div class="card">
-                    {% if product.image %}
-                 
-                        <img class="card-img-top" src="{{product.image.url}}" alt="{{product.title}}">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{product.title|upper}}</h5>
-                        <p class="card-text">{{product.description}}</p>
-                        <p>#{{product.price|intword}}</p>
-                        <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
+                <a href="{% url "get-product" product.id %}" class="text-black text-decoration-none">
+                    <div class="card">
+                        {% if product.image %}
+                            <img class="card-img-top" src="{{product.image.url}}" alt="{{product.title}}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.title|title}}</h5>
+                            <p class="card-text">{{product.description|truncatewords:"10"}}</p>
+                            <p>#{{product.price|intcomma}}</p>
+                            <p><i>Last updated: </i> {{product.updated_at|naturalday|title}}</p>
+
+                            <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>
