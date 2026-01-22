@@ -7,7 +7,16 @@ from .models import Product, ProductFeatures
 def getHome(request):
     username = "Bolaji Ogunmola"
     
-    products = Product.objects.all().order_by("-created_at")
+    products = ( Product.objects
+                .all() 
+                .prefetch_related(
+                    "features",
+                    "images",
+                    "reviews"
+                )
+                .order_by("-created_at")
+            )
+
     # products = Product.objects.filter(id=1)
     # products = Product.objects.filter(title='pRoDuct 2')
     # products = Product.objects.filter(title__iexact='pRoDuct 2')
@@ -29,8 +38,16 @@ def getHome(request):
 
 
 def getProducts(request):
-    products = Product.objects.all().order_by("-created_at")
-
+    products = ( Product.objects
+                .all() 
+                .prefetch_related(
+                    "features",
+                    "images",
+                    "reviews"
+                )
+                .order_by("-created_at")
+            )
+    
     return render(
         request,
         template_name="products.html",
