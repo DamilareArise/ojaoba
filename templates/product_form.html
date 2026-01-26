@@ -1,0 +1,15 @@
+{% extends "common.html" %}
+    {% block title %} Ojaoba {% endblock title %}
+    {% block content %}
+    {% load static %}
+    {% load humanize %}
+
+
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Add product</button>
+    </form>
+
+
+    {% endblock %}

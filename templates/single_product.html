@@ -6,14 +6,34 @@
 
     <div class="container col-md-6 my-2">
         <div class="card border-0 ">
-            {% if product.image %}
-                <img class="card-img-top" src="{{product.image.url}}" alt="{{product.title}}">
+            {% if product.images.all %}
+                <img class="card-img-top" src="{{product.images.all.first.image.url}}" alt="{{product.title}}">
+
+                <div class="d-flex gap-3 my-2">
+                {% for imageObj in product.images.all %}
+                    <img class="" src="{{imageObj.image.url}}" alt="{{product.title}}" height="70" width = "70">
+                {% endfor %}
+                </div>
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{product.title|title}}</h5>
                 <p class="card-text">{{product.description}}</p>
                 <p>#{{product.price|intcomma}}</p>
-                <p><i>Last updated: </i> {{product.updated_at|naturalday|title}}</p>
+                <p><b><i>Last updated: </i></b> {{product.updated_at|naturalday|title}}</p>
+
+                {% if product.features.all %}
+                    <h4>Features</h4>
+                    <ul>
+                        {% for prodFeature in  product.features.all %}
+                            <li>
+                                <b><i>{{prodFeature.label}} :</i></b>
+                                {{prodFeature.value}}
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                {% endif %}
+
                 <a href="#" class="btn btn-sm btn-dark">Add to cart</a>
             </div>
         </div>

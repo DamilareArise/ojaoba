@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, ProductFeatures
+from .forms import ProductForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -36,7 +38,6 @@ def getHome(request):
         context={"name": username, "products": products[0:4]}
     )
 
-
 def getProducts(request):
     products = ( Product.objects
                 .all() 
@@ -47,6 +48,9 @@ def getProducts(request):
                 )
                 .order_by("-created_at")
             )
+    # print(products)
+    # for prod in products:
+    #     print(prod.images.all().first().image.url)
     
     return render(
         request,
@@ -62,3 +66,32 @@ def getProductbyId(request, product_id):
         template_name="single_product.html",
         context={"product": product}
     )
+   
+@login_required    
+def addProduct(request):
+    # print(request.user.email)
+    
+    if request.method == "POST":
+        # print(request.POST.get("title"))
+        # Product.objects.create(
+        #     title = request.POST.get("title")
+        # )
+        
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+        
+        return redirect("products")
+
+    else:
+        form = ProductForm()
+        return render(
+            request,
+            template_name="product_form.html",
+            context={
+                "form":form
+            }
+        )
+    
