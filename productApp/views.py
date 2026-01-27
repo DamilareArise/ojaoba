@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, ProductFeatures
-from .forms import ProductForm
+from .forms import ProductForm, ImageForm, FeatureForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -91,7 +91,49 @@ def addProduct(request):
             request,
             template_name="product_form.html",
             context={
-                "form":form
+                "form":form,
+                "title": "Product Form"
             }
         )
     
+def addImage(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        form = ImageForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.product = product
+            form.save()
+            
+        return redirect("get-product", product_id)
+    else:
+        form = ImageForm()
+        return render(
+            request,
+            template_name="product_form.html",
+            context={
+                "form":form,
+                "title": "Upload Image"
+            }
+        )
+    
+def addFeature(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        form = FeatureForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.product = product
+            form.save()
+            
+        return redirect("get-product", product_id)
+    else:
+        form = FeatureForm()
+        return render(
+            request,
+            template_name="product_form.html",
+            context={
+                "form":form,
+                "title": "Feature Form"
+            }
+        )

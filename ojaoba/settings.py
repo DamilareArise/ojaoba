@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "productApp",
-    "django.contrib.humanize"
+    "django.contrib.humanize",
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 # client <= md => Server <= md => Database
@@ -135,6 +137,8 @@ STATICFILES_DIRS = [
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / 'media'
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # http -> hyper text transfer protocol 
