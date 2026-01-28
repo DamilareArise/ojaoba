@@ -95,7 +95,8 @@ def addProduct(request):
                 "title": "Product Form"
             }
         )
-    
+   
+@login_required 
 def addImage(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -116,7 +117,9 @@ def addImage(request, product_id):
                 "title": "Upload Image"
             }
         )
-    
+
+
+@login_required    
 def addFeature(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -137,3 +140,31 @@ def addFeature(request, product_id):
                 "title": "Feature Form"
             }
         )
+        
+@login_required        
+def editProduct(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        form = ProductForm( request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+        
+        return redirect("get-product", product_id)
+    
+    else:
+        form = ProductForm(instance=product)
+        return render(
+            request,
+            template_name="product_form.html",
+            context={
+                "form":form,
+                "title": "Product Form"
+            }
+        )
+
+
+@login_required
+def deleteProduct(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    return redirect("products")

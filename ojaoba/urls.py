@@ -30,6 +30,8 @@ urlpatterns = [
     path("add-product/", views.addProduct, name="add-product"),
     path("add-image/<int:product_id>/", views.addImage, name="add-image"),
     path("add-feature/<int:product_id>/", views.addFeature, name="add-feature"),
+    path("edit-product/<int:product_id>/", views.editProduct, name="edit-product"),
+    path("delete-product/<int:product_id>/", views.deleteProduct, name="delete-product")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
