@@ -6,9 +6,11 @@
     
     <div class="container my-4">
         <div class="text-center py-2 h3">All Products</div>
-        
+
+        {% if request.user.is_staff %}
         <a href="{% url "add-product" %}" class="btn btn-sm btn-dark mb-2">Add product</a>
-        
+        {% endif %}
+
         <div class="row">
             {% for product in products %}
             <div class="col-md-3 my-2">

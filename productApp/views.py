@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, ProductFeatures
 from .forms import ProductForm, ImageForm, FeatureForm
 from django.contrib.auth.decorators import login_required
+# from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import user_passes_test
+from .utils import is_staff_required, is_superuser_required
 
 # Create your views here.
 
@@ -67,10 +70,11 @@ def getProductbyId(request, product_id):
         context={"product": product}
     )
    
-@login_required    
+# @staff_member_required(login_url="home")   
+@user_passes_test(is_staff_required)
 def addProduct(request):
     # print(request.user.email)
-    
+
     if request.method == "POST":
         # print(request.POST.get("title"))
         # Product.objects.create(
@@ -95,8 +99,10 @@ def addProduct(request):
                 "title": "Product Form"
             }
         )
-   
-@login_required 
+
+    
+    
+@user_passes_test(is_staff_required)
 def addImage(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -119,7 +125,7 @@ def addImage(request, product_id):
         )
 
 
-@login_required    
+@user_passes_test(is_staff_required)    
 def addFeature(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -141,7 +147,7 @@ def addFeature(request, product_id):
             }
         )
         
-@login_required        
+@user_passes_test(is_staff_required)       
 def editProduct(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -163,7 +169,7 @@ def editProduct(request, product_id):
         )
 
 
-@login_required
+@user_passes_test(is_staff_required)
 def deleteProduct(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product.delete()
