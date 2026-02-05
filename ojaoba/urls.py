@@ -21,6 +21,7 @@ from productApp import views
 from django.conf import settings
 # import settings
 from django.conf.urls.static import static
+from userApp.views import SignupView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -32,7 +33,8 @@ urlpatterns = [
     path("add-feature/<int:product_id>/", views.addFeature, name="add-feature"),
     path("edit-product/<int:product_id>/", views.editProduct, name="edit-product"),
     path("delete-product/<int:product_id>/", views.deleteProduct, name="delete-product"),
-    path("accounts/", include("django.contrib.auth.urls"))
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/signup/", SignupView.as_view(), name="signup"),
     
     
 ]

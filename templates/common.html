@@ -44,7 +44,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Change Password</a></li>
+                            <li><a class="dropdown-item" href="{% url "password_change" %}">Change Password</a></li>
                             <li>
                                 <form action="{% url "logout" %}" method="post">
                                     {% csrf_token %}
@@ -56,7 +56,7 @@
         
                     {% else %}
                     <a href="{% url "login" %}" class="btn btn-dark">Login</a>
-                    <a href="" class="btn btn-dark">Sign up</a>
+                    <a href="{% url "signup" %}" class="btn btn-dark">Sign up</a>
                     {% endif %}
                 </div>
 
