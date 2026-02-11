@@ -21,7 +21,7 @@ from productApp import views
 from django.conf import settings
 # import settings
 from django.conf.urls.static import static
-from userApp.views import SignupView
+from userApp.views import SignupView, profileView, editProfile
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -35,6 +35,8 @@ urlpatterns = [
     path("delete-product/<int:product_id>/", views.deleteProduct, name="delete-product"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/signup/", SignupView.as_view(), name="signup"),
+    path("profile/<int:id>/", profileView, name="profile"),
+    path("edit-profile/<int:id>/", editProfile, name="edit-profile"),
     
     
 ]

@@ -43,7 +43,7 @@
                             Hi, {{request.user.first_name}}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url "profile" request.user.id %}">Profile</a></li>
                             <li><a class="dropdown-item" href="{% url "password_change" %}">Change Password</a></li>
                             <li>
                                 <form action="{% url "logout" %}" method="post">
