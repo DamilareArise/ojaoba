@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from .forms import SignupForm, UserForm, UserProfileForm, AdminProfileForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import UserProfile
+from django.contrib import messages
 
 
 # Create your views here.
@@ -29,8 +30,20 @@ def editProfile(request, id):
     user = profile.user
     
     if request.method == 'POST':
-        pass
-    
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            
+            messages.success(request, 'Profile edited')  
+            return redirect('profile', user.id)
+        else:
+            print(user_form.errors)
+            print(profile_form.errors)
+            messages.error(request, 'An error occured')
+            
+         
     else:
         user_form = UserForm(instance=user)
         if request.user.is_superuser:

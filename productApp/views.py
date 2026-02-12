@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 # from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
 from .utils import is_staff_required, is_superuser_required
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.conf import settings
 
 # Create your views here.
 
@@ -86,8 +89,20 @@ def addProduct(request):
             form = form.save(commit=False)
             form.created_by = request.user
             form.save()
+            
+            send_mail(
+                subject="New Product Alert",
+                message=f"A new product has been added by {request.user.first_name} {request.user.last_name}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[request.user.email],
+                fail_silently=False
+            )
+            
+            messages.success(request, 'Product added successfully') 
+        else:
+            messages.error(request, 'An error occured')
         
-        return redirect("products")
+        return redirect('products')
 
     else:
         form = ProductForm()
@@ -154,6 +169,16 @@ def editProduct(request, product_id):
         form = ProductForm( request.POST, instance=product)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Product edited successfully')
+            send_mail(
+                subject="Product Edited Alert",
+                message=f"Product ID0{product.id} has been edited by {request.user.first_name} {request.user.last_name}",
+                from_email=f"Ojaoba <{settings.DEFAULT_FROM_EMAIL}>",
+                recipient_list=[request.user.email],
+                fail_silently=False
+            )
+        else:    
+            messages.error(request, 'An error occured')
         
         return redirect("get-product", product_id)
     
